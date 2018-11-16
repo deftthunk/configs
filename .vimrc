@@ -57,6 +57,7 @@ filetype plugin on
 
 " auto-indent based on knowledge of file extension
 filetype indent on
+au FileType python setl sw=2 sts=2 et
 
 "----------------------------------------------------------------------------
 " 'advanced' features, plugins, external dependencies:

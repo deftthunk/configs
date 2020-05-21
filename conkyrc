@@ -1,0 +1,90 @@
+conky.config = {
+  use_spacer = 'left',
+  pad_percents = 3,
+  background = false,
+  double_buffer = true,
+  font = 'DejaVu Sans Mono:size=8',
+  use_xft = true,
+  alignment = 'tr',
+  gap_x = 0,
+  gap_y = -0,
+  own_window_argb_visual = true,
+  own_window_argb_value = 0,
+  own_window_type = 'normal',
+  own_window_hints = 'undecorated,below,skip_taskbar,skip_pager,sticky',
+  own_window = true,
+  update_interval = 2.0,
+  maximum_width = 200,
+}
+
+conky.text = [[
+${color orange}Hostname: ${color}${nodename}
+${color orange}Kernel:   ${color}${sysname} ${kernel}
+${color orange}Uptime:   ${color}${uptime}
+${color orange}3700X :   ${color}${exec /home/user/bin/conky_helper.sh 3700X}C
+${color orange}RX 570:   ${color}${exec /home/user/bin/conky_helper.sh RX 570}C
+${color orange}5700XT:   ${color}${exec /home/user/bin/conky_helper.sh 5700XT}C
+${hr}
+${color orange}${exec awk '/cpu MHz/{i++}i==1{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu1}%${cpubar cpu1}
+${color orange}${exec awk '/cpu MHz/{i++}i==2{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu2}%${cpubar cpu2}
+${color orange}${exec awk '/cpu MHz/{i++}i==3{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu3}%${cpubar cpu3}
+${color orange}${exec awk '/cpu MHz/{i++}i==4{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu4}%${cpubar cpu4}
+${color orange}${exec awk '/cpu MHz/{i++}i==5{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu5}%${cpubar cpu5}
+${color orange}${exec awk '/cpu MHz/{i++}i==6{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu6}%${cpubar cpu6}
+${color orange}${exec awk '/cpu MHz/{i++}i==7{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu7}%${cpubar cpu7}
+${color orange}${exec awk '/cpu MHz/{i++}i==8{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu8}%${cpubar cpu8}
+${color orange}${exec awk '/cpu MHz/{i++}i==9{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu9}%${cpubar cpu9}
+${color orange}${exec awk '/cpu MHz/{i++}i==10{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu10}%${cpubar cpu10}
+${color orange}${exec awk '/cpu MHz/{i++}i==11{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu11}%${cpubar cpu11}
+${color orange}${exec awk '/cpu MHz/{i++}i==12{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu12}%${cpubar cpu12}
+${color orange}${exec awk '/cpu MHz/{i++}i==13{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu13}%${cpubar cpu13}
+${color orange}${exec awk '/cpu MHz/{i++}i==14{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu14}%${cpubar cpu14}
+${color orange}${exec awk '/cpu MHz/{i++}i==15{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu15}%${cpubar cpu15}
+${color orange}${exec awk '/cpu MHz/{i++}i==16{printf "%.2f",$4/1000; exit}' /proc/cpuinfo}${color}${cpu cpu16}%${cpubar cpu16}
+
+${cpugraph}
+${color orange}Name                CPU%   MEM%
+${color lightgrey} ${top name 1} ${top cpu 1} ${top mem 1}
+${color lightgrey} ${top name 2} ${top cpu 2} ${top mem 2}
+${color lightgrey} ${top name 3} ${top cpu 3} ${top mem 3}
+${color lightgrey} ${top name 4} ${top cpu 4} ${top mem 4}
+${color lightgrey} ${top name 5} ${top cpu 5} ${top mem 5}
+${color lightgrey} ${top name 6} ${top cpu 6} ${top mem 6}
+${color lightgrey} ${top name 7} ${top cpu 7} ${top mem 7}
+${color lightgrey} ${top name 8} ${top cpu 8} ${top mem 8}
+${color orange}Load average: ${color}${loadavg}
+${color orange}Processes: ${color}${processes} 
+${color orange}Running:${color} ${running_processes}
+${hr}
+${color orange}RAM:  ${color}${mem}/${memmax}
+${memperc}% ${membar 4}
+#${color orange}Swap: ${color}${swap}/${swapmax}
+#${swapperc}% ${swapbar 4}
+${memgraph}
+${hr}
+${color orange}/     ${color}${fs_used /} ${fs_size /} ${fs_bar 6 /}
+${color orange}store ${color}${fs_used /home/user/store} ${fs_size /home/user/store} ${fs_bar 6 /home/user/store}
+${color orange}mount ${color}${fs_used /home/user/mount} ${fs_size /home/user/mount} ${fs_bar 6 /home/user/mount}
+${hr}
+enp8s0
+${color orange}IP:   ${color}${addr enp8s0}
+${color orange}Up:   ${color}${upspeed enp8s0}
+${color orange}Down: ${color}${downspeed enp8s0}
+${downspeedgraph enp8s0 25,90 000000 ff0000} ${alignr}${upspeedgraph enp8s0 25,90 000000 00ff00}
+docker0
+${color orange}IP:   ${color}${addr docker0}
+${color orange}Up:   ${color}${upspeed docker0}
+${color orange}Down: ${color}${downspeed docker0}
+${downspeedgraph docker0 25,90 000000 ff0000} ${alignr}${upspeedgraph docker0 25,90 000000 00ff00}
+docker_gwbridge
+${color orange}IP:   ${color}${addr docker_gwbridge}
+${color orange}Up:   ${color}${upspeed docker_gwbridge}
+${color orange}Down: ${color}${downspeed docker_gwbridge}
+${downspeedgraph docker_gwbridge 25,90 000000 ff0000} ${alignr}${upspeedgraph docker_gwbridge 25,90 000000 00ff00}
+${if_existing /sys/class/net/virbr0/operstate up}
+virbr0
+${color orange}IP:   ${color}${addr virbr0}
+${color orange}Up:   ${color}${upspeed virbr0}
+${color orange}Down: ${color}${downspeed virbr0}
+${downspeedgraph virbr0 25,100 000000 ff0000} ${alignr}${upspeedgraph virbr0 25,100 000000 00ff00} ${endif}
+]]

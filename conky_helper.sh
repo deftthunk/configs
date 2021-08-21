@@ -10,6 +10,8 @@
 
 
 target=$@
+device=""
+GPU_FREQ="0"
 hwmonPath="/sys/class/hwmon"
 declare -A deviceMap
 
@@ -33,18 +35,44 @@ for hwmon in $(ls -1 $hwmonPath); do
 done
 
 
+getTemp () {
+	deviceTemp=$(cat ${deviceMap[$device]}/temp1_input)
+	echo $(echo $deviceTemp | cut -c-2)
+}
+
+
+## only works for RX570 atm
+getGPUFreq() {
+	GPU_FREQ=$(awk '{printf "%.2f",$1/1000000000; exit}' /sys/class/drm/card0/device/hwmon/hwmon2/freq1_input)
+	echo $GPU_FREQ
+}
+
+
+## only works for RX570 atm
+getGPUFreqPercent () {
+	deviceFreq=$(cat /sys/class/drm/card0/device/hwmon/hwmon2/freq1_input)
+	deviceBaseFreq=1168000000
+	percentage=$(bc -l <<< "($deviceFreq/$deviceBaseFreq)*100")
+	echo $(echo $percentage | cut -d '.' -f1)
+}
+
+
 case $target in
 	"3700X")
-		temp=$(cat ${deviceMap["k10temp"]}/temp1_input)
-		echo $(echo $temp | cut -c-2)
+		device="k10temp"
+		temp=$(getTemp)
+		echo "$temp"C
 		;;
 	"RX 570")
-		temp=$(cat ${deviceMap["gcn"]}/temp1_input)
-		echo $(echo $temp | cut -c-2)
+		device="gcn"
+		temp=$(getTemp)
+		freq=$(getGPUFreq)
+		freqPercent=$(getGPUFreqPercent)
+		echo "$temp"C '|' "$freq"GHz '|' "$freqPercent"% 
 		;;
 	"5700XT")
-		temp=$(cat ${deviceMap["navi"]}/temp1_input)
-		echo $(echo $temp | cut -c-2)
+		device="navi"
+		echo $(getTemp)
 		;;
 	*)
 esac
